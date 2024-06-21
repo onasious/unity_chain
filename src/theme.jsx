@@ -4,10 +4,10 @@ export const getDesignTokens = (mode) => ({
     ...(mode === "light"
       ? {
           primary: {
-            main: "#EFBC9B",
+            main: "#E0A75E",
           },
           secondary: {
-            main: "#FBF3D5",
+            main: "#973131",
           },
           background: {
             default: "#D6DAC8",
@@ -18,12 +18,12 @@ export const getDesignTokens = (mode) => ({
         }
       : {
           primary: {
-            main: "#EFBC9B",
-            500: "#EFBC9B", // Adding a fallback 500 property
+            main: "#E0A75E",
+            500: "#E0A75E", // Adding a fallback 500 property
           },
           secondary: {
-            main: "#FBF3D5",
-            500: "#FBF3D5", // Adding a fallback 500 property
+            main: "#973131",
+            500: "#973131", // Adding a fallback 500 property
           },
           background: {
             default: "#D6DAC8",

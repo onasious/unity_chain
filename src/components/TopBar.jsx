@@ -91,10 +91,10 @@ const TopBar = ({ open, handleDrawerOpen, setMode }) => {
   const theme = useTheme();
   const navigate = useNavigate();
   const handleSettingsClick = () => {
-    navigate('/settings'); // Navigate to the settings page
+    navigate('/app/settings'); // Navigate to the settings page
   };
   const handleProfileClick = () => {
-    navigate('/profile'); // Navigate to the settings page
+    navigate('/app/profile'); // Navigate to the settings page
   };
   return (
     <AppBar

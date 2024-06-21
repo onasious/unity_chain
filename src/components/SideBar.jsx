@@ -79,18 +79,14 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 const Array1 = [
-  { text: "HR", icon: <SupervisedUserCircleOutlined  />, path: "/" },
-  { text: "INVENTORY", icon: <Inventory2Outlined  />, path: "/inventory" },
+  { text: "HR", icon: <SupervisedUserCircleOutlined  />, path: "/app/hr" },
+  { text: "INVENTORY", icon: <Inventory2Outlined  />, path: "/app/Inventory" },
   {
     text: "ACCOUNTANT",
     icon: <PointOfSaleOutlined  />,
-    path: "/Accountant",
+    path: "/app/Accountant",
   },
-  {
-    text: "Invoices Balances",
-    icon: <ReceiptOutlinedIcon />,
-    path: "/invoices",
-  },
+  
 ];
 {/*
 const Array2 = [

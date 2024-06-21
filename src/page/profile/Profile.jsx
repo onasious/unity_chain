@@ -3,7 +3,7 @@ const profile = () => {
   return(
   <div>
 
-THE HR PAGE UNDER DESIGN
+THE profile PAGE UNDER DESIGN
 
   </div>
 );

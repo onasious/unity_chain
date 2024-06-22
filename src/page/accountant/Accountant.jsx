@@ -31,7 +31,7 @@ const AccountantPage = () => {
             <Typography variant="h5" sx={{ flexGrow: 1 }}>
               Accounting Dashboard
             </Typography>
-            <Button variant="contained" color="primary">Some Action</Button>
+            {/* <Button variant="contained" color="primary">Some Action</Button> */}
           </Toolbar>
         </AppBar>
 

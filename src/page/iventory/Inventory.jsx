@@ -154,9 +154,9 @@ const InventoryPage = () => {
           <Typography variant="h4">
             Inventory Dashboard
           </Typography>
-          <Button variant="contained" color="primary">
+          {/* <Button variant="contained" color="primary">
             Modify
-          </Button>
+          </Button> */}
         </Box>
         <TableContainer>
           <Table>

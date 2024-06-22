@@ -1,34 +1,38 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import Row1 from "./Row1";
 import Row2 from "./Row2";
 import Row3 from "./Row3";
 import Button from "@mui/material/Button";
-import { DownloadOutlined } from "@mui/icons-material";
+import { PersonAddOutlined } from "@mui/icons-material";
 import { Box, Stack, Typography, useTheme } from "@mui/material";
 import Header from "../../components/Header";
 
-const hr = () => {
+const HR = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
+
+  const handleAddEmployee = () => {
+    navigate("/app/profile");
+  };
+
   return (
     <div>
-<Stack direction={"row"} justifyContent={"space-between"} alignItems={"center"}>
-        <Header
-          isDashboard={true}
-          title={"HR PAGE"}
-          subTitle={"Welcome to THE HR PAGE"}
-        />
-  
+      <Stack direction={"row"} justifyContent={"space-between"} alignItems={"center"}>
+        <Header isDashboard={true} title={"HR PAGE"} subTitle={"Welcome to THE HR PAGE"} />
+
         <Box sx={{ textAlign: "right", mb: 1.3 }}>
           <Button
-            sx={{ padding: "6px 8px", textTransform: "capitalize" }}
+            sx={{ padding: "6px 10px", textTransform: "capitalize" }}
             variant="contained"
             color="primary"
+            onClick={handleAddEmployee}
           >
-            <DownloadOutlined />
-            Download Reports
+            <PersonAddOutlined sx={{ mr: 1 }}/>
+             ADD EMPLOYEE
           </Button>
         </Box>
-</Stack>
+      </Stack>
 
       <Row1 />
       <Row2 />
@@ -37,4 +41,4 @@ const hr = () => {
   );
 };
 
-export default hr;
+export default HR;

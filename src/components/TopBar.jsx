@@ -94,7 +94,7 @@ const TopBar = ({ open, handleDrawerOpen, setMode }) => {
     navigate('/app/settings'); // Navigate to the settings page
   };
   const handleProfileClick = () => {
-    navigate('/app/profile'); // Navigate to the settings page
+    navigate('/app/settings'); // Navigate to the settings page
   };
   return (
     <AppBar
@@ -163,10 +163,7 @@ const TopBar = ({ open, handleDrawerOpen, setMode }) => {
           )}
 
         
-          {/* Use onClick to trigger the handleSettingsClick function */}
-          <IconButton color="inherit" onClick={handleSettingsClick}>
-          <SettingsOutlinedIcon />
-          </IconButton>
+          
 
           <IconButton color="inherit"  onClick={handleProfileClick}>
             <Person2OutlinedIcon />

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Typography, Box, Grid, TextField, FormControlLabel, Button, Divider, Card, CardContent, Switch, IconButton } from '@mui/material';
+import { Container, Typography, Box, Grid, TextField, FormControlLabel, Button, Divider, Card, CardContent, Switch, IconButton,useTheme } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import SecurityOutlinedIcon from '@mui/icons-material/SecurityOutlined';
@@ -17,19 +17,19 @@ const SettingsPage = () => {
   const handleToggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
-
+  const theme = useTheme();
   return (
     <Box sx={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', bgcolor: 'background.default', color: 'text.primary' }}>
       <Container maxWidth="md">
         <Card sx={{ minHeight: '80vh', display: 'flex', flexDirection: 'column' }}>
           <CardContent sx={{ flex: 1 }}>
-            <Typography variant="h4" gutterBottom align="center" sx={{ mt: 4 }}>
+            <Typography variant="h3" gutterBottom align="center" sx={{ mt: 6 , fontWeight: 'bold',color: '#E0A75E'}}>
               Settings
             </Typography>
 
             <Box sx={{ mt: 4 }}>
               <Typography variant="h6" gutterBottom>
-                <PersonOutlineIcon sx={{ mr: 1 }} /> Account
+                <PersonOutlineIcon sx={{ mr: 1 , color:theme.palette.secondary.main}} /> Account
               </Typography>
               <Divider />
               <Grid container spacing={2} sx={{ mt: 2 }}>
@@ -42,7 +42,7 @@ const SettingsPage = () => {
 
             <Box sx={{ mt: 4 }}>
               <Typography variant="h6" gutterBottom>
-                <SecurityOutlinedIcon sx={{ mr: 1 }} /> Security
+                <SecurityOutlinedIcon sx={{ mr: 1, color:theme.palette.secondary.main }} /> Security
               </Typography>
               <Divider />
               <Grid container spacing={2} sx={{ mt: 2 }}>

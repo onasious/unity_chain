@@ -24,16 +24,15 @@ const AccountantPage = () => {
   return (
     <>
       <CssBaseline />
+      <Typography variant="h5" noWrap sx={{ flexGrow: 1, color: theme.palette.info.light,fontWeight: 'bold' }}>
+            ACCOUNTANT PAGE
+          </Typography>
+          <Typography>
+          WELCOME TO THE ACCOUNTANT PAGE
+          </Typography>
       <Box sx={{ width: '100%', height: '100vh', padding: 0, overflow: 'auto' }}>
-        {/* Mini Header */}
-        <AppBar position="static" sx={{ backgroundColor: 'transparent', boxShadow: 'none' }}>
-          <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', padding: '10px 24px' }}>
-            <Typography variant="h5" sx={{ flexGrow: 1 }}>
-              Accounting Dashboard
-            </Typography>
-            {/* <Button variant="contained" color="primary">Some Action</Button> */}
-          </Toolbar>
-        </AppBar>
+        
+        
 
         <Grid container spacing={3} sx={{ marginTop: '20px', padding: '0 24px' }}>
           {/* Bank Card */}

@@ -30,7 +30,7 @@ const AppContainer = styled(Box)(({ theme }) => ({
   flexDirection: 'column',
   minHeight: '100vh',
   backgroundColor: theme.palette.background.default,
-  color: theme.palette.text.primary,
+  color: theme.palette.primary,
   padding: 0,
   margin: 0,
 }));

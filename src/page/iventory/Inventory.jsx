@@ -17,7 +17,8 @@ import {
   ListItem, 
   ListItemText, 
   AppBar, 
-  Toolbar 
+  Toolbar ,
+  useTheme
 } from '@mui/material';
 import { 
   Menu, 
@@ -83,7 +84,7 @@ const Pagination = styled('div')(({ theme }) => ({
 const InventoryPage = () => {
   const [open, setOpen] = useState(false);
   const inventory = [
-    { id: 1, item: 'Lenovo 3rd Generation', code: 'P125389', units: 'Inches', quantity: 2, sellingPrice: 253, purchasePrice: 248 },
+    { id: 1 , item: 'Lenovo 3rd Generation', code: 'P125389', units: 'Inches', quantity: 2, sellingPrice: 253, purchasePrice: 248 },
     { id: 2, item: 'Nike Jordan', code: 'P125390', units: 'Pieces', quantity: 4, sellingPrice: 360, purchasePrice: 350 },
     { id: 3, item: 'Apple Series 5 Watch', code: 'P125391', units: 'Inches', quantity: 7, sellingPrice: 724, purchasePrice: 700 },
     { id: 4, item: 'Amazon Echo Dot', code: 'P125392', units: 'Box', quantity: 3, sellingPrice: 210, purchasePrice: 200 },
@@ -99,6 +100,7 @@ const InventoryPage = () => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+  const theme = useTheme();
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -106,20 +108,7 @@ const InventoryPage = () => {
       <AppBarStyled position="fixed" 
 // @ts-ignore
       open={open} sx={{ backgroundColor: 'transparent', boxShadow: 'none' }}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{ marginRight: 2, ...(open && { display: 'none' }) }}
-          >
-            <Menu />
-          </IconButton>
-          <Typography variant="h6" noWrap>
-            Inventory Dashboard
-          </Typography>
-        </Toolbar>
+        
       </AppBarStyled>
       <Drawer
         sx={{
@@ -135,34 +124,22 @@ const InventoryPage = () => {
         open={open}
       >
         <Toolbar />
-        <Box sx={{ overflow: 'auto' }}>
-          <List>
-            {['HR', 'Accountant', 'Inventory'].map((text, 
-// @ts-ignore
-            index) => (
-              <ListItem button key={text}>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
-        </Box>
+        
       </Drawer>
       <Main 
 // @ts-ignore
       open={open}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-          <Typography variant="h4">
-            Inventory Dashboard
+        <Typography variant="h5" noWrap sx={{ flexGrow: 1, color: theme.palette.info.light,fontWeight: 'bold' }}>
+            INVENTORY PAGE
           </Typography>
-          {/* <Button variant="contained" color="primary">
-            Modify
-          </Button> */}
-        </Box>
+          <Typography>
+          WELCOME TO THE INVENTORY PAGE
+          </Typography>
         <TableContainer>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>#</TableCell>
+                <TableCell style={{ color:theme.palette.secondary.main , fontWeight: 'bold',fontSize:20 }}>#</TableCell>
                 <TableCell>Item</TableCell>
                 <TableCell>Code</TableCell>
                 <TableCell>Units</TableCell>
@@ -175,7 +152,7 @@ const InventoryPage = () => {
             <TableBody>
               {inventory.map((item) => (
                 <TableRow key={item.id}>
-                  <TableCell>{item.id}</TableCell>
+                  <TableCell style={{ color:theme.palette.secondary.main , fontWeight: 'bold',fontSize:20 }}>{item.id}</TableCell>
                   <TableCell>{item.item}</TableCell>
                   <TableCell>{item.code}</TableCell>
                   <TableCell>{item.units}</TableCell>

@@ -2,30 +2,15 @@ import React from "react";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import { Avatar, styled, useTheme, Typography, Tooltip } from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
-import { HomeOutlined, Inventory2Outlined, PointOfSaleOutlined, SupervisedUserCircleOutlined } from "@mui/icons-material";
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
-import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
-import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
-import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
-import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
-import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
-import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
-import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
-import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
+import { Inventory2Outlined, PointOfSaleOutlined, SupervisedUserCircleOutlined } from "@mui/icons-material";
 import { useLocation, useNavigate } from "react-router-dom";
 import { grey } from "@mui/material/colors";
 
@@ -88,29 +73,13 @@ const Array1 = [
   },
   
 ];
-{/*
-const Array2 = [
-  { text: "Profile Form", icon: <PersonOutlinedIcon />, path: "/form" },
-  { text: "Calendar", icon: <CalendarTodayOutlinedIcon />, path: "/calendar" },
-  {
-    text: "FAQ Page",
-    icon: <HelpOutlineOutlinedIcon />,
-    path: "/faq",
-  },
-];
-
-const Array3 = [
-  { text: "Bar Chart", icon: <BarChartOutlinedIcon />, path: "/bar" },
-  { text: "Pie Chart", icon: <PieChartOutlineOutlinedIcon />, path: "/pie" },
-  { text: "Line Chart", icon: <TimelineOutlinedIcon />, path: "/line" },
-  { text: "Geography Chart", icon: <MapOutlinedIcon />, path: "/geography" },
-];
-*/}
 
 const SideBar = ({ open, handleDrawerClose }) => {
   let location = useLocation();
   const navigate = useNavigate();
   const theme = useTheme();
+
+
   return (
     <Drawer variant="permanent" open={open}>
       <DrawerHeader>
@@ -137,20 +106,11 @@ const SideBar = ({ open, handleDrawerClose }) => {
       />
       <Typography
         align="center"
-        sx={{ fontSize: open ? 17 : 0, transition: "0.25s" }}
+        sx={{ fontSize: open ? 17 : 0, transition: "0.25s",color:theme.palette.info.main }}
       >
         SALMA
       </Typography>
-      <Typography
-        align="center"
-        sx={{
-          fontSize: open ? 15 : 0,
-          transition: "0.25s",
-          color: theme.palette.info.main,
-        }}
-      >
-        Admin
-      </Typography>
+    
 
       <Divider />
 
@@ -172,6 +132,7 @@ const SideBar = ({ open, handleDrawerClose }) => {
                         ? grey[800]
                         : grey[300]
                       : null,
+                      color:theme.palette.secondary.main
                 }}
               >
                 <ListItemIcon
@@ -179,6 +140,7 @@ const SideBar = ({ open, handleDrawerClose }) => {
                     minWidth: 0,
                     mr: open ? 3 : "auto",
                     justifyContent: "center",
+                    
                   }}
                 >
                   {item.icon}
@@ -195,86 +157,7 @@ const SideBar = ({ open, handleDrawerClose }) => {
 
       <Divider />
 
-     {/* <List>
-        {Array2.map((item) => (
-          <ListItem key={item.path} disablePadding sx={{ display: "block" }}>
-            <Tooltip title={open ? null : item.text} placement="left">
-              <ListItemButton
-                onClick={() => {
-                  navigate(item.path);
-                }}
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                  bgcolor:
-                    location.pathname === item.path
-                      ? theme.palette.mode === "dark"
-                        ? grey[800]
-                        : grey[300]
-                      : null,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
-                >
-                  {item.icon}
-                </ListItemIcon>
-                <ListItemText
-                  primary={item.text}
-                  sx={{ opacity: open ? 1 : 0 }}
-                />
-              </ListItemButton>
-            </Tooltip>
-          </ListItem>
-        ))}
-      </List>
-
-      <Divider />
-
-      <List>
-        {Array3.map((item) => (
-          <ListItem key={item.path} disablePadding sx={{ display: "block" }}>
-            <Tooltip title={open ? null : item.text} placement="left">
-              <ListItemButton
-                onClick={() => {
-                  navigate(item.path);
-                }}
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                  bgcolor:
-                    location.pathname === item.path
-                      ? theme.palette.mode === "dark"
-                        ? grey[800]
-                        : grey[300]
-                      : null,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
-                >
-                  {item.icon}
-                </ListItemIcon>
-                <ListItemText
-                  primary={item.text}
-                  sx={{ opacity: open ? 1 : 0 }}
-                />
-              </ListItemButton>
-            </Tooltip>
-          </ListItem>
-        ))}
-      </List>
-                */}
+  
     </Drawer>
   );
 };

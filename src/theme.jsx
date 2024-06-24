@@ -13,7 +13,7 @@ export const getDesignTokens = (mode) => ({
             default: "#D6DAC8",
           },
           text: {
-            primary: "#9CAFAA",
+            primary: "#088395",
           },
         }
       : {
@@ -29,7 +29,7 @@ export const getDesignTokens = (mode) => ({
             default: "#D6DAC8",
           },
           text: {
-            primary: "#9CAFAA",
+            primary: "#088395",
           },
         }),
   },

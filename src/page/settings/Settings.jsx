@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
-import { Container, Typography, Box, Grid, TextField, FormControlLabel, Button, Divider, Card, CardContent, Switch, IconButton,useTheme } from '@mui/material';
+import { Container, Typography, Box, Grid, TextField, FormControlLabel, Button, Divider, Card, CardContent, Switch, IconButton, useTheme } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import SecurityOutlinedIcon from '@mui/icons-material/SecurityOutlined';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { getAuth, reauthenticateWithCredential, EmailAuthProvider, updatePassword } from 'firebase/auth';
 
 const SettingsPage = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   const handleLogout = () => {
     navigate('/');
@@ -17,6 +24,33 @@ const SettingsPage = () => {
   const handleToggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
+
+  const handleChangePassword = async () => {
+    setLoading(true);
+    setError('');
+    setSuccessMessage('');
+
+    if (newPassword !== confirmPassword) {
+      setError("New password and confirm password do not match.");
+      setLoading(false);
+      return;
+    }
+
+    const auth = getAuth();
+    const user = auth.currentUser;
+    const credential = EmailAuthProvider.credential(user.email, currentPassword);
+
+    try {
+      await reauthenticateWithCredential(user, credential);
+      await updatePassword(user, newPassword);
+      setSuccessMessage("Password updated successfully.");
+    } catch (error) {
+      setError("Error updating password: " + error.message);
+    }
+
+    setLoading(false);
+  };
+
   const theme = useTheme();
   return (
     <Box sx={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', bgcolor: 'background.default', color: 'text.primary' }}>
@@ -36,7 +70,6 @@ const SettingsPage = () => {
                 <Grid item xs={12} sm={6}>
                   <TextField fullWidth label="Email" variant="outlined" />
                 </Grid>
-                
               </Grid>
             </Box>
 
@@ -52,6 +85,8 @@ const SettingsPage = () => {
                     label="Current Password"
                     type={showPassword ? 'text' : 'password'}
                     variant="outlined"
+                    value={currentPassword}
+                    onChange={(e) => setCurrentPassword(e.target.value)}
                     InputProps={{
                       endAdornment: (
                         <IconButton onClick={handleToggleShowPassword} edge="end">
@@ -67,6 +102,8 @@ const SettingsPage = () => {
                     label="New Password"
                     type={showPassword ? 'text' : 'password'}
                     variant="outlined"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
                     InputProps={{
                       endAdornment: (
                         <IconButton onClick={handleToggleShowPassword} edge="end">
@@ -82,6 +119,8 @@ const SettingsPage = () => {
                     label="Confirm New Password"
                     type={showPassword ? 'text' : 'password'}
                     variant="outlined"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                     InputProps={{
                       endAdornment: (
                         <IconButton onClick={handleToggleShowPassword} edge="end">
@@ -101,12 +140,28 @@ const SettingsPage = () => {
             </Box>
           </CardContent>
           <Box sx={{ textAlign: 'center', p: 2 }}>
-            <Button variant="contained" color="primary" sx={{ mr: 2 }}>
-              Save Changes
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{ mr: 2 }}
+              onClick={handleChangePassword}
+              disabled={loading}
+            >
+              {loading ? 'Saving...' : 'Save Changes'}
             </Button>
             <Button variant="contained" color="error" onClick={handleLogout}>
               Log Out
             </Button>
+            {error && (
+              <Typography variant="body1" color="error" align="center" sx={{ mt: 2 }}>
+                {error}
+              </Typography>
+            )}
+            {successMessage && (
+              <Typography variant="body1" color="success" align="center" sx={{ mt: 2 }}>
+                {successMessage}
+              </Typography>
+            )}
           </Box>
         </Card>
       </Container>

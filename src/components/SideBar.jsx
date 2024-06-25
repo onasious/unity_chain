@@ -102,13 +102,13 @@ const SideBar = ({ open, handleDrawerClose }) => {
           transition: "0.25s",
         }}
         alt="Remy Sharp"
-        src="https://media.allure.com/photos/5a26c1d8753d0c2eea9df033/3:4/w_1262,h_1683,c_limit/mostbeautiful.jpg"
+        src="https://i.pinimg.com/736x/49/87/50/49875050beb29c2b49a06b739a56669b.jpg"
       />
       <Typography
         align="center"
         sx={{ fontSize: open ? 17 : 0, transition: "0.25s",color:theme.palette.info.main }}
       >
-        SALMA
+        ANAS
       </Typography>
     
 

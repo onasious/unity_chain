@@ -1,71 +1,41 @@
-// @ts-ignore
-import React, { useState } from 'react';
-import { 
-  Box, 
-  CssBaseline, 
-  Typography, 
-  Table, 
-  TableBody, 
-  TableCell, 
-  TableHead, 
-  TableRow, 
-  Paper, 
-  Button, 
-  IconButton, 
-  Drawer, 
-  List, 
-  ListItem, 
-  ListItemText, 
-  AppBar, 
-  Toolbar ,
-  useTheme
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import {
+  Box,
+  CssBaseline,
+  Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Paper,
+  Button,
+  IconButton,
+  Drawer,
+  AppBar,
+  Toolbar,
+  TextField,
+  useTheme,
 } from '@mui/material';
-import { 
-  Menu, 
-  MoreVert, 
-  Visibility, 
-  CheckCircle, 
-  Cancel 
-} from '@mui/icons-material';
+import { Menu, MoreVert, Visibility, CheckCircle, Cancel } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
 
 const drawerWidth = 240;
 
-const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
-  // @ts-ignore
-  ({ theme, open }) => ({
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: `-${drawerWidth}px`,
-    ...(open && {
-      transition: theme.transitions.create('margin', {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      marginLeft: 0,
-    }),
-  }),
-);
-
-const AppBarStyled = styled(AppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-// @ts-ignore
-})(({ theme, open }) => ({
-  transition: theme.transitions.create(['margin', 'width'], {
+const Main = styled('main')(({ theme }) => ({
+  flexGrow: 1,
+  padding: theme.spacing(3),
+  transition: theme.transitions.create('margin', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  ...(open && {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: `${drawerWidth}px`,
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
+}));
+
+const AppBarStyled = styled(AppBar)(({ theme }) => ({
+  transition: theme.transitions.create(['margin', 'width'], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
   }),
 }));
 
@@ -83,33 +53,76 @@ const Pagination = styled('div')(({ theme }) => ({
 
 const InventoryPage = () => {
   const [open, setOpen] = useState(false);
-  const inventory = [
-    { id: 1 , item: 'Lenovo 3rd Generation', code: 'P125389', units: 'Inches', quantity: 2, sellingPrice: 253, purchasePrice: 248 },
-    { id: 2, item: 'Nike Jordan', code: 'P125390', units: 'Pieces', quantity: 4, sellingPrice: 360, purchasePrice: 350 },
-    { id: 3, item: 'Apple Series 5 Watch', code: 'P125391', units: 'Inches', quantity: 7, sellingPrice: 724, purchasePrice: 700 },
-    { id: 4, item: 'Amazon Echo Dot', code: 'P125392', units: 'Box', quantity: 3, sellingPrice: 210, purchasePrice: 200 },
-    { id: 5, item: 'Lobar Handy', code: 'P125393', units: 'Kilograms', quantity: 1, sellingPrice: 155, purchasePrice: 150 },
-    { id: 6, item: 'Woodcraft Sandal', code: 'P125394', units: 'Inches', quantity: 2, sellingPrice: 253, purchasePrice: 248 },
-  ];
+  const [inventory, setInventory] = useState([]);
+  const [formData, setFormData] = useState({
+    item: '',
+    code: '',
+    units: '',
+    quantity: '',
+    sellingPrice: '',
+    purchasePrice: '',
+  });
+
+  useEffect(() => {
+    fetchInventory();
+  }, []);
+
+  const fetchInventory = async () => {
+    try {
+      const response = await axios.get('http://localhost:5001/inventory');
+      setInventory(response.data);
+    } catch (error) {
+      console.error('Error fetching inventory', error);
+    }
+  };
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:5001/inventory', formData);
+      setInventory([...inventory, response.data]);
+      setFormData({
+        item: '',
+        code: '',
+        units: '',
+        quantity: '',
+        sellingPrice: '',
+        purchasePrice: '',
+      });
+    } catch (error) {
+      console.error('Error adding inventory item', error);
+    }
+  };
 
   const handleDrawerOpen = () => {
     setOpen(true);
   };
 
-  // @ts-ignore
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
   const theme = useTheme();
 
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBarStyled position="fixed" 
-// @ts-ignore
-      open={open} sx={{ backgroundColor: 'transparent', boxShadow: 'none' }}>
-        
-      </AppBarStyled>
+      <AppBarStyled
+        position="fixed"
+        sx={{
+          backgroundColor: 'transparent',
+          boxShadow: 'none',
+          width: open ? `calc(100% - ${drawerWidth}px)` : '100%',
+          marginLeft: open ? `${drawerWidth}px` : 0,
+        }}
+      ></AppBarStyled>
       <Drawer
         sx={{
           width: drawerWidth,
@@ -124,22 +137,32 @@ const InventoryPage = () => {
         open={open}
       >
         <Toolbar />
-        
       </Drawer>
-      <Main 
-// @ts-ignore
-      open={open}>
-        <Typography variant="h5" noWrap sx={{ flexGrow: 1, color: theme.palette.info.light,fontWeight: 'bold' }}>
-            INVENTORY PAGE
-          </Typography>
-          <Typography>
-          WELCOME TO THE INVENTORY PAGE
-          </Typography>
+      <Main
+        sx={{
+          marginLeft: open ? 0 : `-${drawerWidth}px`,
+          transition: theme.transitions.create('margin', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+          }),
+          ...(open && {
+            marginLeft: 0,
+            transition: theme.transitions.create('margin', {
+              easing: theme.transitions.easing.easeOut,
+              duration: theme.transitions.duration.enteringScreen,
+            }),
+          }),
+        }}
+      >
+        <Typography variant="h5" noWrap sx={{ flexGrow: 1, color: theme.palette.info.light, fontWeight: 'bold' }}>
+          INVENTORY PAGE
+        </Typography>
+        <Typography>WELCOME TO THE INVENTORY PAGE</Typography>
         <TableContainer>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell style={{ color:theme.palette.secondary.main , fontWeight: 'bold',fontSize:20 }}>#</TableCell>
+                <TableCell style={{ color: theme.palette.secondary.main, fontWeight: 'bold', fontSize: 20 }}>#</TableCell>
                 <TableCell>Item</TableCell>
                 <TableCell>Code</TableCell>
                 <TableCell>Units</TableCell>
@@ -152,36 +175,21 @@ const InventoryPage = () => {
             <TableBody>
               {inventory.map((item) => (
                 <TableRow key={item.id}>
-                  <TableCell style={{ color:theme.palette.secondary.main , fontWeight: 'bold',fontSize:20 }}>{item.id}</TableCell>
+                  <TableCell style={{ color: theme.palette.secondary.main, fontWeight: 'bold', fontSize: 20 }}>{item.id}</TableCell>
                   <TableCell>{item.item}</TableCell>
                   <TableCell>{item.code}</TableCell>
                   <TableCell>{item.units}</TableCell>
                   <TableCell>{item.quantity}</TableCell>
-                  <TableCell>{`$${item.sellingPrice.toFixed(2)}`}</TableCell>
-                  <TableCell>{`$${item.purchasePrice.toFixed(2)}`}</TableCell>
+                  <TableCell>{item.sellingPrice ? `$${item.sellingPrice.toFixed(2)}` : 'N/A'}</TableCell>
+                  <TableCell>{item.purchasePrice ? `$${item.purchasePrice.toFixed(2)}` : 'N/A'}</TableCell>
                   <TableCell>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      sx={{ margin: 0.5 }}
-                      startIcon={<Visibility />}
-                    >
+                    <Button variant="contained" color="primary" sx={{ margin: 0.5 }} startIcon={<Visibility />}>
                       History
                     </Button>
-                    <Button
-                      variant="contained"
-                      color="success"
-                      sx={{ margin: 0.5 }}
-                      startIcon={<CheckCircle />}
-                    >
+                    <Button variant="contained" color="success" sx={{ margin: 0.5 }} startIcon={<CheckCircle />}>
                       Stock in
                     </Button>
-                    <Button
-                      variant="contained"
-                      color="error"
-                      sx={{ margin: 0.5 }}
-                      startIcon={<Cancel />}
-                    >
+                    <Button variant="contained" color="error" sx={{ margin: 0.5 }} startIcon={<Cancel />}>
                       Stock out
                     </Button>
                     <IconButton sx={{ margin: 0.5 }}>
@@ -199,6 +207,18 @@ const InventoryPage = () => {
           <Button variant="contained" color="primary" sx={{ margin: '0 8px' }}>Page</Button>
           <Button variant="outlined" sx={{ backgroundColor: '#1976d2', color: '#fff' }}>Next</Button>
         </Pagination>
+
+        <form onSubmit={handleSubmit}>
+          <TextField label="Item" name="item" value={formData.item} onChange={handleChange} required />
+          <TextField label="Code" name="code" value={formData.code} onChange={handleChange} required />
+          <TextField label="Units" name="units" value={formData.units} onChange={handleChange} required />
+          <TextField label="Quantity" name="quantity" value={formData.quantity} onChange={handleChange} required />
+          <TextField label="Selling Price" name="sellingPrice" value={formData.sellingPrice} onChange={handleChange} required />
+          <TextField label="Purchase Price" name="purchasePrice" value={formData.purchasePrice} onChange={handleChange} required />
+          <Button type="submit" variant="contained" color="primary">
+            Add Inventory Item
+          </Button>
+        </form>
       </Main>
     </Box>
   );
